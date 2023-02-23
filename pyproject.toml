@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "GPTflix"
+version = "0.2.0"
+description = "Accurate answers about movies!"
+authors = ["stephan"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">3.9.7,<4.0.0"
+streamlit = "^1.17.0"
+openai = "^0.26.2"
+
+[tool.poetry.group.dev.dependencies]
+black = {version = "^23.1a1", allow-prereleases = true}
+python-dotenv = "^0.21.1"
+pytest = "^7.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+# Secrets to be set from streamlit : Pinecone API key and OpenAI API Key
+[API_KEYS]
