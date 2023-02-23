@@ -1,3 +1,5 @@
+This is the source code of www.gptflix.ai
+
 # GPTflix source code for deployment on Streamlit
 
 Making this repo real quick, I'll add more explanations later :)
