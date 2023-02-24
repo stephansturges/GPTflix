@@ -69,20 +69,21 @@ COMPLETIONS_API_PARAMS = {
 feedback_url = "https://forms.gle/YMTtGK1zXdCRzRaj6"
 bb_url ="https://www.bensbites.co/?utm_source=gptflix"
 tech_url = "https://news.ycombinator.com/item?id=34802625"
+github_url = "https://github.com/stephansturges/GPTflix"
 
 with st.sidebar:
     st.markdown("# About 🙌")
     st.markdown(
         "GPTflix allows you to talk to version of chatGPT \n"
         "that has access to reviews of about 10 000 movies! 🎬 \n"
-        "I hope it will help you save some time and actually watch more cool stuff!\n"
+        "It's a little stupid at the moment because it knows 30k movies but only has reviews for 10k 😝\n"
         )
     st.markdown(
         "Unline chatGPT, GPTflix can't make stuff up\n"
-        "and will only answer from prior knowlege 👩‍🏫 \n"
+        "and will only answer from injected knowlege 👩‍🏫 \n"
     )
     st.markdown("---")
-    st.markdown("Made by Stephan Sturges")
+    st.markdown("A side project by Stephan Sturges")
     st.markdown("Kept online by [Ben's Bites](%s)!" %bb_url)
     st.image(bens_bites_logo, width=60)
 
@@ -90,7 +91,8 @@ with st.sidebar:
     st.markdown("Tech [info](%s) for you nerds out there!" %tech_url)
     st.markdown("Give feedback [here](%s)" %feedback_url)
     st.markdown("---")
-
+    st.markdown("Code open-sourced [here](%s)" %github_url)
+    st.markdown("---")
 
 
 # MAIN FUNCTIONS
@@ -251,7 +253,7 @@ if 'past' not in st.session_state:
 
 # We will get the user's input by calling the get_text function
 def get_text():
-    input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. 😊","Who are you?", key="input")
+    input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
     return input_text
 
 
