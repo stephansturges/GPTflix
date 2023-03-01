@@ -37,7 +37,10 @@ def randomize_array(arr):
 
 st.set_page_config(page_title="GPTflix", page_icon="🍿", layout="wide")
 
-st.header("GPTflix is like chatGPT for movie reviews!🍿\n")
+# st.header("GPTflix is like chatGPT for movie reviews!🍿\n")
+
+
+st.header("Thanks for visiting GPTflix! It's been a fun experiment, with over 2500 unique users over two weeks the site was online. Perhaps we will be back some time...🍿\n")
 
 # Define the name of the index and the dimensionality of the embeddings
 index_name = "400kmovies"
@@ -261,18 +264,18 @@ def get_text():
 user_input = get_text()
 
 
-if user_input:
-    output = answer_query_with_context_pinecone(user_input)
+# if user_input:
+#     output = answer_query_with_context_pinecone(user_input)
 
-    # store the output 
-    st.session_state.past.append(user_input)
-    st.session_state.generated.append(output)
+#     # store the output 
+#     st.session_state.past.append(user_input)
+#     st.session_state.generated.append(output)
 
 
-if st.session_state['generated']:
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        message(st.session_state["generated"][i],seed=bott_av , key=str(i))
-        message(st.session_state['past'][i], is_user=True,avatar_style="adventurer",seed=user_av, key=str(i) + '_user')
+# if st.session_state['generated']:
+#     for i in range(len(st.session_state['generated'])-1, -1, -1):
+#         message(st.session_state["generated"][i],seed=bott_av , key=str(i))
+#         message(st.session_state['past'][i], is_user=True,avatar_style="adventurer",seed=user_av, key=str(i) + '_user')
 
 
 
