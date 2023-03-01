@@ -857,15 +857,11 @@ files = [
 
 [[package]]
 name = "openai"
-version = "0.26.5"
+version = "0.27.0"
 description = "Python client library for the OpenAI API"
 category = "main"
 optional = false
 python-versions = ">=3.7.1"
-files = [
-    {file = "openai-0.26.5.tar.gz", hash = "sha256:2882a59c67ae33c2716a04389a6e6680d061f073424953732f917fde219addfd"},
-]
-
 [package.dependencies]
 aiohttp = "*"
 requests = ">=2.20"
