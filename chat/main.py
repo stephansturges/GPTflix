@@ -37,10 +37,10 @@ def randomize_array(arr):
 
 st.set_page_config(page_title="GPTflix", page_icon="🍿", layout="wide")
 
-# st.header("GPTflix is like chatGPT for movie reviews!🍿\n")
+st.header("GPTflix is like chatGPT for movie reviews!🍿\n")
 
 
-st.header("Thanks for visiting GPTflix! It's been a fun experiment, with over 2500 unique users over two weeks and an average of 10 questions per user while the site was online! Perhaps we will be back some time...🍿\n")
+#st.header("Thanks for visiting GPTflix! It's been a fun experiment, with over 2500 unique users over two weeks and an average of 10 questions per user while the site was online! Perhaps we will be back some time...🍿\n")
 
 # Define the name of the index and the dimensionality of the embeddings
 index_name = "400kmovies"
@@ -57,8 +57,8 @@ pineconeindex = pinecone.Index(index_name)
 ######################################
 
 
-COMPLETIONS_MODEL = "text-davinci-003"
-#COMPLETIONS_MODEL = "text-curie-001"
+#COMPLETIONS_MODEL = "text-davinci-003"
+COMPLETIONS_MODEL = "gpt-3.5-turbo"
 EMBEDDING_MODEL = "text-embedding-ada-002"
 
 COMPLETIONS_API_PARAMS = {
@@ -79,7 +79,7 @@ with st.sidebar:
     st.markdown(
         "GPTflix allows you to talk to version of chatGPT \n"
         "that has access to reviews of about 10 000 movies! 🎬 \n"
-        "It's a little stupid at the moment because it knows 30k movies but only has reviews for 10k 😝\n"
+        "Holy smokes, chatGPT and 10x cheaper??! We are BACK! 😝\n"
         )
     st.markdown(
         "Unline chatGPT, GPTflix can't make stuff up\n"
@@ -171,10 +171,9 @@ def construct_prompt_pinecone(question):
     
     header = """Answer the question as truthfully as possible using the provided context, 
     and if the answer is not contained within the text below, say "I don't know."
-    Answer in a very sarcastic tone and make it fun! Surpise the user with your answers!\n
-    Context:\n
+    Answer in a very sarcastic tone and make it fun! Surprise the user with your answers. You can give long answers tangentially related to the movie.\n
     You are GPTflix, a AI movie-buff that loves talking about movies!\n
-    Movie references:\n
+    Context:\n
     """ 
     return header + "".join(chosen_sections) 
 
@@ -227,8 +226,12 @@ def answer_query_with_context_pinecone(query):
     print(prompt)
     print("---------------------------------------------")
     try:
-        response = openai.Completion.create(
-                    prompt=prompt,
+        response = openai.ChatCompletion.create(
+                    messages=[{"role": "system", "content": "You are a helpful AI who loves movies."},
+                            {"role": "user", "content": str(prompt)}],
+                            # {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+                            # {"role": "user", "content": "Where was it played?"}
+                            # ]
                     **COMPLETIONS_API_PARAMS
                 )
     except Exception as e:
@@ -238,44 +241,43 @@ def answer_query_with_context_pinecone(query):
 
     choices = response.get("choices", [])
     if len(choices) > 0:
-        return choices[0]["text"].strip(" \n")
+        return choices[0]["message"]["content"].strip(" \n")
     else:
         return None
 
 
 
-# # Storing the chat
-# if 'generated' not in st.session_state:
-#     st.session_state['generated'] = []
+# Storing the chat
+if 'generated' not in st.session_state:
+    st.session_state['generated'] = []
 
-# if 'past' not in st.session_state:
-#     st.session_state['past'] = []
+if 'past' not in st.session_state:
+    st.session_state['past'] = []
 
-# def clear_text():
-#     st.session_state["input"] = ""
+def clear_text():
+    st.session_state["input"] = ""
 
-# # We will get the user's input by calling the get_text function
-# def get_text():
-#     input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
-#     return input_text
-
-
-
-# user_input = get_text()
+# We will get the user's input by calling the get_text function
+def get_text():
+    input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
+    return input_text
 
 
-# if user_input:
-#     output = answer_query_with_context_pinecone(user_input)
 
-#     # store the output 
-#     st.session_state.past.append(user_input)
-#     st.session_state.generated.append(output)
+user_input = get_text()
 
 
-# if st.session_state['generated']:
-#     for i in range(len(st.session_state['generated'])-1, -1, -1):
-#         message(st.session_state["generated"][i],seed=bott_av , key=str(i))
-#         message(st.session_state['past'][i], is_user=True,avatar_style="adventurer",seed=user_av, key=str(i) + '_user')
+if user_input:
+    output = answer_query_with_context_pinecone(user_input)
 
+    # store the output 
+    st.session_state.past.append(user_input)
+    st.session_state.generated.append(output)
+
+
+if st.session_state['generated']:
+    for i in range(len(st.session_state['generated'])-1, -1, -1):
+        message(st.session_state["generated"][i],seed=bott_av , key=str(i))
+        message(st.session_state['past'][i], is_user=True,avatar_style="adventurer",seed=user_av, key=str(i) + '_user')
 
 
