@@ -261,7 +261,7 @@ def get_text():
 
 
 
-user_input = get_text()
+# user_input = get_text()
 
 
 # if user_input:
