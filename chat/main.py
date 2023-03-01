@@ -244,20 +244,20 @@ def answer_query_with_context_pinecone(query):
 
 
 
-# Storing the chat
-if 'generated' not in st.session_state:
-    st.session_state['generated'] = []
+# # Storing the chat
+# if 'generated' not in st.session_state:
+#     st.session_state['generated'] = []
 
-if 'past' not in st.session_state:
-    st.session_state['past'] = []
+# if 'past' not in st.session_state:
+#     st.session_state['past'] = []
 
 # def clear_text():
 #     st.session_state["input"] = ""
 
-# We will get the user's input by calling the get_text function
-def get_text():
-    input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
-    return input_text
+# # We will get the user's input by calling the get_text function
+# def get_text():
+#     input_text = st.text_input("Input a question here! For example: \"Is X movie good?\". \n It works best if your question contains the title of a movie! You might want to be really specific, like talking about Pixar's Brave rather than just Brave. Also, I have no memory of previous questions!😅😊","Who are you?", key="input")
+#     return input_text
 
 
 
