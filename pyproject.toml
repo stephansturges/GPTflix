@@ -1,15 +1,20 @@
 [tool.poetry]
 name = "GPTflix"
-version = "0.2.0"
+version = "0.4.0"
 description = "Accurate answers about movies!"
-authors = ["stephan"]
+authors = ["stephan sturges"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">3.9.7,<4.0.0"
 streamlit = "^1.17.0"
-openai = "^0.26.2"
+openai = "^0.27.0"
+tiktoken = "0.2.0"
+streamlit-chat = "0.0.2.1"
+pinecone-client = "2.2.1"
+
+
 
 [tool.poetry.group.dev.dependencies]
 black = {version = "^23.1a1", allow-prereleases = true}
