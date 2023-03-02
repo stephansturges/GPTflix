@@ -1,3 +1,4 @@
+openai==0.27.0
 aiohttp==3.8.4
 aiosignal==1.3.1
 altair==4.2.2
@@ -18,7 +19,6 @@ gitdb==4.0.10
 GitPython==3.1.31
 idna==3.4
 importlib-metadata==6.0.0
-penai==0.27.0
 packaging==23.0
 inecone-client==2.2.1
 protobuf==3.20.3
