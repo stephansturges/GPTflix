@@ -120,7 +120,7 @@ def get_embedding(text, model):
 
 
 
-MAX_SECTION_LEN = 1200 #in tokens
+MAX_SECTION_LEN = 2500 #in tokens
 SEPARATOR = "\n"
 ENCODING = "cl100k_base"  # encoding for text-embedding-ada-002
 
