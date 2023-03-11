@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "GPTflix"
-version = "0.4.0"
-description = "Accurate answers about movies!"
+name = "DKVgpt"
+version = "0.1.0"
+description = "Accurate answers about DKV"
 authors = ["stephan sturges"]
 license = "MIT"
 readme = "README.md"
