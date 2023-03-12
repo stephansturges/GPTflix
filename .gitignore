@@ -7,7 +7,7 @@ chat/*.env
 
 settings.json
 
-d*
+data_sample/d*
 
 ### macOS ###
 # General
