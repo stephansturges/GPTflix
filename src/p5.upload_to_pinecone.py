@@ -99,10 +99,10 @@ if __name__ == "__main__":
     info = load_dotenv(dotenv_path)
 
     # Define the name of the index and the dimensionality of the embeddings
-    index_name = "100movies"
-    embeddings_csv = "/home/aiwarehouse/Documents/Projects/GPTflix/data_sample/d4.embeddings_maker_results.csv"
+    index_name = "1kmovies"
+    embeddings_csv = "data_sample/d4.embeddings_maker_results.csv"
     embedding_dims = 1536
-    create_index = False
+    create_index = True
 
     pinecone = PineconeUpload(
         pinecone_api_key=os.environ.get("PINECONE_API_KEY"),

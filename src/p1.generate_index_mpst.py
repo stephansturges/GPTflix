@@ -16,7 +16,7 @@ def num_tokens_from_string(string, encoding_name: str = "cl100k_base"):
     return num_tokens
 
 
-def combine_text_to_one_column(df, nrows: int):
+def combine_text_to_one_column(df):
     df["gpttext"] = (
         "Title: "
         + df["title"].astype(str)
@@ -28,7 +28,7 @@ def combine_text_to_one_column(df, nrows: int):
 
     df = df.drop(df.columns[[0, 1, 2, 3, 4, 5]], axis=1)
 
-    df.to_csv(f"data_sample/p1.mpst_5k_converted.csv")
+    df.to_csv(f"data_sample/d1.mpst_1k_converted.csv")
 
 
 if __name__ == "__main__":
@@ -37,16 +37,14 @@ if __name__ == "__main__":
     # and converts this data into a CSV that contains a single column
     # with a block of text that we want to make accessible on our Pinecone database
 
-    nrows = 100
 
     # read sample data
     df = pd.read_csv(
-        filepath_or_buffer="data_sample/d0.mpst_5k_raw.csv",
+        filepath_or_buffer="data_sample/d0.mpst_1k_raw.csv",
         sep=",",
         header=0,
         dtype="string",
         encoding="utf-8",
-        nrows=nrows
     )
 
-    combine_text_to_one_column(df=df, nrows=nrows)
+    combine_text_to_one_column(df=df)

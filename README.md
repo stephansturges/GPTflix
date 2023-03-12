@@ -1,6 +1,13 @@
 # GPTflix source code for deployment on Streamlit
 
+## What are we going to build?
+
+
 This is the source code of www.gptflix.ai
+
+We will build a GPTflix QA bot with OpenAI, Pinecone DB and Streamlit. You will learn how to prepare text to send to an embedding model. You will capture the embeddings and text returned from the model for upload to Pinecone DB. Afterwards you will setup a Pinecone DB index and upload the OpenAI embeddings to the DB for the bot to search over the embeddings.
+
+Finally, we will setup a QA bot frontend chat app with Streamlit. When the user asks the bot a question, the bot will search over the movie text in your Pinecone DB. It will answer your question about a movie based on text from the DB.
 
 </br>
 
@@ -49,23 +56,23 @@ Those need to be your pinecone and openai API keys of course ;)
 This repo is set up to walk through a demo using the MPST data in /data_samples
 These are the steps:
 
-1. Run `generate_index_mpst.py` to prepare the text from`./data_sample/mpst_5k.csv` into a format we can inject into a model and get its embedding.
+1. Run `p1.generate_index_mpst.py` to prepare the text from`./data_sample/d0.mpst_1k_raw.csv` into a format we can inject into a model and get its embedding.
 
 [//]: # 
 
         python p1.generate_index_mpst.py
 
-2. Run `make_jsonl_for_requests_mpst.py` to convert your new `mpst_5k_converted.csv` file to a jsonl file with instructions to run the embeddings requests against the OpenAI API.
+2. Run `p2.make_jsonl_for_requests_mpst.py` to convert your new `d1.mpst_1k_converted.csv` file to a jsonl file with instructions to run the embeddings requests against the OpenAI API.
 
 [//]: # 
 
         python p2.make_jsonl_for_requests_mpst.py
 
-3. Run `api_request_parallel_processor.py` on the JSONL file from (2) to get embeddings.
+3. Run `p3.api_request_parallel_processor.py` on the JSONL file from (2) to get embeddings.
 
 [//]: # 
 
-    python p3.api_request_parallel_processor.py \
+    python src/p3.api_request_parallel_processor.py \
       --requests_filepath data_sample/d2.embeddings_maker.jsonl \
       --save_filepath data_sample/d3.embeddings_maker_results.jsonl \
       --request_url https://api.openai.com/v1/embeddings \
@@ -75,13 +82,13 @@ These are the steps:
       --max_attempts 5 \
       --logging_level 20
 
-4. Run `convert_jsonl_with_embeddings_to_csv.py` with the new jsonl file to make a pretty CSV with the text and embeddings. This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.
+4. Run `p4.convert_jsonl_with_embeddings_to_csv.py` with the new jsonl file to make a pretty CSV with the text and embeddings. This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.
 
 [//]: # 
 
         python p4.convert_jsonl_with_embeddings_to_csv.py
 
-5. Run `upload_to_pinecone.py` with your api key and database settings to upload all that text data and embeddings.
+5. Run `p5.upload_to_pinecone.py` with your api key and database settings to upload all that text data and embeddings.
 
 [//]: # 
 
