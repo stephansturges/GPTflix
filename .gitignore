@@ -1,6 +1,14 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos
 
+
+chat/*.env
+.env
+
+settings.json
+
+d*
+
 ### macOS ###
 # General
 .DS_Store

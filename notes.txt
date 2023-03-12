@@ -1,0 +1,6 @@
+
+# How to curl your index and fetch a record for index id 1
+curl --request GET \
+     --url 'https://YOUR-PINECONE-INDEX-NAME.svc.us-east1-gcp.pinecone.io/vectors/fetch?ids=1&namespace=movies' \
+     --header 'Api-Key: YOUR-PINECONE-API-KEY' \
+     --header 'accept: application/json'

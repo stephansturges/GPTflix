@@ -16,16 +16,29 @@ This repo contains the GPTflix source code and a Streamlit deployment guide.
 
 This repo is set up for deployment on Streamlit, you will want to set your environment variables in streamlit like this:
 
-1. Set up an account on [Streamlit cloud](https://share.streamlit.io/signup)
+1. Fork the [GPTflix](https://github.com/stephansturges/GPTflix/fork) repo to your GitHub account. 
+
 2. Set up an account on [Pinecone.io](https://app.pinecone.io/)
-2. Link to github, find your repo, create an app pointing to /chat/main.py as the executable
-3. Go to your app settings, and navigate to secrets. Set up the secret like this:
 
+3. Set up an account on [Streamlit cloud](https://share.streamlit.io/signup)
 
+4. Create a new app on Streamlit. Link it to your fork of the repo on Github then point the app to `/chat/main.py` as the main executable.
 
-[//]: # ([API_KEYS]
-pinecone = "xxxxxxx"
-openai = "xxxxx")
+5. Go to your app settings, and navigate to Secrets. Set up the secret like this:
+
+[//]: # 
+
+    [API_KEYS]
+    pinecone = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx"
+    openai = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+6. Make a `.env` file in the the root of the project with your OpenAI API Key on your local machine.
+
+[//]: # 
+
+    PINECONE_API_KEY=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
+    OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 
 
 Those need to be your pinecone and openai API keys of course ;)
@@ -36,15 +49,43 @@ Those need to be your pinecone and openai API keys of course ;)
 This repo is set up to walk through a demo using the MPST data in /data_samples
 These are the steps:
 
-1. Run generate_index_mpst.py to convert the .csv file in data_samples into a format with just the text we want to inject.
+1. Run `generate_index_mpst.py` to prepare the text from`./data_sample/mpst_5k.csv` into a format we can inject into a model and get its embedding.
 
-2. Run make_jsonl_for_requests_mpst.py to use your new csv file to make a jsonl file with instructions to run the embeddings requests against the OpenAI API.
+[//]: # 
 
-3. Run api_request_parallel_processor.py using the docs inside the file (add the tag to point to your API key) on the JSONL file from (2) to get embeddings
+        python p1.generate_index_mpst.py
 
-4. Run convert_jsonl_with_embeddings_to_csv.py with the new jsonl file to make a pretty CSV with the text and embeddings. This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.
+2. Run `make_jsonl_for_requests_mpst.py` to convert your new `mpst_5k_converted.csv` file to a jsonl file with instructions to run the embeddings requests against the OpenAI API.
 
-5. Run upload_to_pinecone.py with your api key and database settings to upload all that text data and embeddings.
+[//]: # 
+
+        python p2.make_jsonl_for_requests_mpst.py
+
+3. Run `api_request_parallel_processor.py` on the JSONL file from (2) to get embeddings.
+
+[//]: # 
+
+    python p3.api_request_parallel_processor.py \
+      --requests_filepath data_sample/d2.embeddings_maker.jsonl \
+      --save_filepath data_sample/d3.embeddings_maker_results.jsonl \
+      --request_url https://api.openai.com/v1/embeddings \
+      --max_requests_per_minute 1500 \
+      --max_tokens_per_minute 6250000 \
+      --token_encoding_name cl100k_base \
+      --max_attempts 5 \
+      --logging_level 20
+
+4. Run `convert_jsonl_with_embeddings_to_csv.py` with the new jsonl file to make a pretty CSV with the text and embeddings. This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.
+
+[//]: # 
+
+        python p4.convert_jsonl_with_embeddings_to_csv.py
+
+5. Run `upload_to_pinecone.py` with your api key and database settings to upload all that text data and embeddings.
+
+[//]: # 
+
+        python p5.upload_to_pinecone.py
 
 You can run the app locally but you'll need to remove the images (the paths are different on streamlit cloud)
 
