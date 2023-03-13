@@ -54,6 +54,8 @@ def check_p5_results_query_pinecone(
 
 if __name__ == "__main__":
 
-    check_p3_results()
+    # check_p3_results()
 
-    # check_p5_results_query_pinecone(ids=["99"], index_name="YOUR-PINECONE-INDEX-NAME")
+    # index starts at 0
+    # check data from d4.csv matches the index in pinecone
+    check_p5_results_query_pinecone(ids=["9"], index_name="1kmovies")

@@ -46,11 +46,7 @@ class PineconeUpload:
         index = pinecone.Index(self.index_name)
 
         # Get info about our new pinecone index.
-        print(
-            f"Pinecone index info: {pinecone.whoami()} \n"
-            "Total vector count  are in the index: "
-            f"{index.describe_index_stats()['total_vector_count']}"
-        )
+        print(f"Pinecone index info: {pinecone.whoami()} \n")
         return index
 
     def upsert_embeddings_batch(self, starting_index, data_batch, index_offset):
@@ -92,6 +88,7 @@ class PineconeUpload:
             self.upsert_embeddings_batch(0, batch, index_offset)
             print("batch " + str(index_offset))
             index_offset += batch_size
+        print(f"Total vectors in the index: {self.pinecone_index.describe_index_stats()['total_vector_count']}")
 
 
 if __name__ == "__main__":

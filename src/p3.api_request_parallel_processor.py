@@ -95,6 +95,7 @@ The script is structured as follows:
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+from datetime import datetime
 import aiohttp  # for making API calls concurrently
 import argparse  # for running script from command line
 import asyncio  # for running API calls concurrently
@@ -402,6 +403,7 @@ if __name__ == "__main__":
     if args.save_filepath is None:
         args.save_filepath = args.requests_filepath.replace(".jsonl", "_results.jsonl")
 
+    start_time = datetime.now()
     # run script
     asyncio.run(
         process_api_requests_from_file(
@@ -416,6 +418,7 @@ if __name__ == "__main__":
             logging_level=int(args.logging_level),
         )
     )
+    print(f"\nTook {datetime.now() - start_time} h.m.s:ms to process data to OpenAI\n")
 
 
 """

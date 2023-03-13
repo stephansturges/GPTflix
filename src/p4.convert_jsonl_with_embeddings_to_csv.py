@@ -22,15 +22,37 @@ def flattenizer(a):
 
 dataframe_with_text_and_embeddings = pd.DataFrame()
 
-mydata_expanded_flat = [
-    flattenizer(
-        [
-            json.loads(json.dumps(line))[0]["input"],
-            json.loads(json.dumps(line))[1]["data"][0]["embedding"],
-        ]
-    )
-    for line in data
-]
+processed_count = 0
+mydata_expanded_flat = []
+for line in data:
+    # if the data had an error when trying to embed the text from OpenAi
+    # it returns a list instance instead of a dict.
+    # The error count reported from p3 plus processed_count should equal
+    # the total amount of documents you sent to OpenAI for processing
+    if isinstance(line[1], list):
+        continue
+    else:
+        info = flattenizer(
+            [
+                json.loads(json.dumps(line))[0]["input"],
+                json.loads(json.dumps(line))[1]["data"][0]["embedding"],
+            ]
+        )
+        mydata_expanded_flat.append(info)
+        processed_count += 1
+
+print(f"\nTotal embeddings converted to csv: {processed_count}\n")
+
+# TODO Drop any bad lines if an embedding was not successful
+# mydata_expanded_flat = [
+#     flattenizer(
+#         [
+#             json.loads(json.dumps(line))[0]["input"],
+#             json.loads(json.dumps(line))[1]["data"][0]["embedding"],
+#         ]
+#     )
+#     for line in data
+# ]
 
 print("CONVERTED JSONL FLAT ARRAY")
 
