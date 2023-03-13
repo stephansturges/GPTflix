@@ -1,6 +1,5 @@
 import json
 import pandas as pd
-import numpy as np
 
 
 # This is a sample converter that takes CSV data from a CSV table
@@ -9,11 +8,14 @@ import numpy as np
 # which can be loaded and processed by api_request_parallel_processor.py
 # to generate the embeddings which we will use for vector search!
 
-df2 = pd.read_csv('data_sample/mpst_5k.csv')
+df2 = pd.read_csv("data_sample/d1.mpst_1k_converted.csv")
 
 
-filename = "data_sample/all_plots_embeddings_maker.jsonl"
-jobs = [{"model": "text-embedding-ada-002", "input": str(row[1])} for index, row in df2.iterrows()]
+filename = "data_sample/d2.embeddings_maker.jsonl"
+jobs = [
+    {"model": "text-embedding-ada-002", "input": str(row[1])}
+    for index, row in df2.iterrows()
+]
 with open(filename, "w") as f:
     for job in jobs:
         json_string = json.dumps(job)

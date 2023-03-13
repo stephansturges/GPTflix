@@ -30,7 +30,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning) 
 
 
-openai.api_key =  #### SET YOUR API KEY HERE
+openai.api_key =  #### SET YOUR API KEY HER
 
 
 

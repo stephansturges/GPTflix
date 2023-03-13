@@ -92,6 +92,10 @@ The script is structured as follows:
 """
 
 # imports
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+from datetime import datetime
 import aiohttp  # for making API calls concurrently
 import argparse  # for running script from command line
 import asyncio  # for running API calls concurrently
@@ -102,6 +106,8 @@ import tiktoken  # for counting tokens
 import time  # for sleeping after rate limit is hit
 from dataclasses import dataclass  # for storing API inputs, outputs, and metadata
 import socket
+
+
 
 socket.gethostbyname("")
 
@@ -378,12 +384,15 @@ def task_id_generator_function():
 
 
 if __name__ == "__main__":
+    dotenv_path = join(dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+
     # parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--requests_filepath")
     parser.add_argument("--save_filepath", default=None)
     parser.add_argument("--request_url", default="https://api.openai.com/v1/embeddings")
-    parser.add_argument("--api_key", default=os.getenv("OPENAI_API_KEY"))
+    parser.add_argument("--api_key", default=os.environ.get("OPENAI_API_KEY"))
     parser.add_argument("--max_requests_per_minute", type=int, default=3_000 * 0.5)
     parser.add_argument("--max_tokens_per_minute", type=int, default=250_000 * 0.5)
     parser.add_argument("--token_encoding_name", default="cl100k_base")
@@ -394,6 +403,7 @@ if __name__ == "__main__":
     if args.save_filepath is None:
         args.save_filepath = args.requests_filepath.replace(".jsonl", "_results.jsonl")
 
+    start_time = datetime.now()
     # run script
     asyncio.run(
         process_api_requests_from_file(
@@ -408,6 +418,7 @@ if __name__ == "__main__":
             logging_level=int(args.logging_level),
         )
     )
+    print(f"\nTook {datetime.now() - start_time} h.m.s:ms to process data to OpenAI\n")
 
 
 """
