@@ -179,7 +179,7 @@ def construct_prompt_pinecone(question):
 
 
 
-TO BE ADDED: memory with summary of past discussions
+#TO BE ADDED: memory with summary of past discussions
 
 def summarize_past_conversation(content):
 
