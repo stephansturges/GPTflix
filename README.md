@@ -82,7 +82,8 @@ These are the steps:
       --max_attempts 5 \
       --logging_level 20
 
-4. Run `p4.convert_jsonl_with_embeddings_to_csv.py` with the new jsonl file to make a pretty CSV with the text and embeddings. This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.
+4. Run `p4.convert_jsonl_with_embeddings_to_csv.py` with the new jsonl file to make a pretty CSV with the text and embeddings. 
+~~This is cosmetic and a bit of a waste of time in the process, feel free to clean it up.~~.  -> actually that's not quite true: you don't care about making the CSV because you don't need to care about the index of the embeddings **if you are only going to upload data to the index once**, if you are going to be updating the indexing and adding more data, or need an offline / readable format to keep track of things then making the CSV kinda makes sense :)
 
 [//]: # 
 
